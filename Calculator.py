@@ -18,6 +18,8 @@ while 1:
     else:
         print ("You can only put +, -, * or /")        
 
+if operation == "/" and b == 0:
+	print ("Dafuq, do you want to divide by zero? GTFO!")
 def add(a, b):
     return a + b
     
