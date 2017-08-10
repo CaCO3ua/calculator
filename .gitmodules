@@ -1,3 +1,4 @@
-[submodule "calc"]
-	path = calc
-	url = https://github.com/CaCO3ua/calc.git
+[submodule "test"]
+	path = test
+	url = ssh://|
+
