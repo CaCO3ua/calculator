@@ -10,50 +10,43 @@ def my_form():
     return render_template("index.html")
 
 
-@app.route('/', methods=['POST'])
-def my_form_post():
+@app.route('/answer/', methods=['POST'])
+def answer():
 
-    while True:
-        try:
-            a = float(request.form['a'])
-            break
-        except ValueError:
-            return "Man, first number is not a number, c'mon!"
+    try:
+        first_operand = float(request.form['first_operand'])
+    except ValueError:
+        return "Man, first number is not a number, c'mon!"
 
-    while True:
-        try:
-            b = float(request.form['b'])
-            break
-        except ValueError:
-            return "Man, second is not a number, c'mon!"
+    try:
+        second_operand = float(request.form['second_operand'])
+    except ValueError:
+        return "Man, second number is not a number, c'mon!"
 
     operations_list = ["+", "-", "*", "/"]
-    while True:
-        operation = request.form['operation']
-        if operation in operations_list:
-            break
-        else:
-            return "You can only put +, -, * or /"
+    operation = request.form['operation']
+    if operation not in operations_list:
+        return "You can only put +, -, * or /"
 
-    if operation == "/" and b == 0:
-        return "Dafuq, do you want to divide by zero? GTFO!"
+    def add(first_operand, second_operand):
+        return first_operand + second_operand
 
-    def add(a, b):
-        return a + b
+    def multiply(first_operand, second_operand):
+        return first_operand - second_operand
 
-    def multiply(a, b):
-        return a - b
+    def subtract(first_operand, second_operand):
+        return first_operand - second_operand
 
-    def subtract(a, b):
-        return a - b
-
-    def divide(a, b):
-        return a / b
+    def divide(first_operand, second_operand):
+        try:
+            return first_operand / second_operand
+        except ZeroDivisionError:
+            return "Dafuq, do you want to divide by zero? GTFO!"
 
     functions_list = [add, subtract, multiply, divide]
     action = dict(zip(operations_list, functions_list))
 
-    result = action[operation](a, b)
+    result = action[operation](first_operand, second_operand)
 
     return str(result)
 
